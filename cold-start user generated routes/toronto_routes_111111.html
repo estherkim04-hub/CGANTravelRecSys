@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_77cd9f9a05f17dca42c9401b1e560214 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_77cd9f9a05f17dca42c9401b1e560214" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_77cd9f9a05f17dca42c9401b1e560214 = L.map(
+                "map_77cd9f9a05f17dca42c9401b1e560214",
+                {
+                    center: [43.65892266666666, -79.41629133333333],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 13,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_b0714f4c0019a18f80f66e1fac34b36f = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_b0714f4c0019a18f80f66e1fac34b36f.addTo(map_77cd9f9a05f17dca42c9401b1e560214);
+        
+    
+            var poly_line_d5890e0aa17ca1d847db93cb443ca89b = L.polyline(
+                [[43.6675, -79.39417], [43.66222, -79.38028], [43.6525, -79.38361]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_77cd9f9a05f17dca42c9401b1e560214);
+        
+    
+            poly_line_d5890e0aa17ca1d847db93cb443ca89b.bindTooltip(
+                `<div>
+                     Route 1
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_eccb7fd7529a6c535f9e43fca66c87da = L.marker(
+                [43.6675, -79.39417],
+                {
+}
+            ).addTo(map_77cd9f9a05f17dca42c9401b1e560214);
+        
+    
+            var icon_43ed2b8b0e23553a5979d5fb62fad8c6 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_c2d36858145f362afcbf994db2518d06 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6f23c111ec48dadc42443c36a3fdbdae = $(`<div id="html_6f23c111ec48dadc42443c36a3fdbdae" style="width: 100.0%; height: 100.0%;">Route 1: Royal_Ontario_Museum</div>`)[0];
+                popup_c2d36858145f362afcbf994db2518d06.setContent(html_6f23c111ec48dadc42443c36a3fdbdae);
+            
+        
+
+        marker_eccb7fd7529a6c535f9e43fca66c87da.bindPopup(popup_c2d36858145f362afcbf994db2518d06)
+        ;
+
+        
+    
+    
+                marker_eccb7fd7529a6c535f9e43fca66c87da.setIcon(icon_43ed2b8b0e23553a5979d5fb62fad8c6);
+            
+    
+            var marker_4fe7650cab0520f5483032f7d5b24606 = L.marker(
+                [43.66222, -79.38028],
+                {
+}
+            ).addTo(map_77cd9f9a05f17dca42c9401b1e560214);
+        
+    
+            var icon_43c50f59ae4c1247c0af1a3e1ae92eb1 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_1551774e1ce5f30ee3a41f6fa0983cbe = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d969a263e162484f7860958e057b5590 = $(`<div id="html_d969a263e162484f7860958e057b5590" style="width: 100.0%; height: 100.0%;">Route 1: Maple_Leaf_Gardens</div>`)[0];
+                popup_1551774e1ce5f30ee3a41f6fa0983cbe.setContent(html_d969a263e162484f7860958e057b5590);
+            
+        
+
+        marker_4fe7650cab0520f5483032f7d5b24606.bindPopup(popup_1551774e1ce5f30ee3a41f6fa0983cbe)
+        ;
+
+        
+    
+    
+                marker_4fe7650cab0520f5483032f7d5b24606.setIcon(icon_43c50f59ae4c1247c0af1a3e1ae92eb1);
+            
+    
+            var marker_dd118297dd55232ddee83b728f08286d = L.marker(
+                [43.6525, -79.38361],
+                {
+}
+            ).addTo(map_77cd9f9a05f17dca42c9401b1e560214);
+        
+    
+            var icon_83761631d0378f2ad8b029bd355bc947 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_78aaf28d03f4bb0837194ead7009e82d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_94c627f9210d35cae91b26e304e65633 = $(`<div id="html_94c627f9210d35cae91b26e304e65633" style="width: 100.0%; height: 100.0%;">Route 1: Nathan_Phillips_Square</div>`)[0];
+                popup_78aaf28d03f4bb0837194ead7009e82d.setContent(html_94c627f9210d35cae91b26e304e65633);
+            
+        
+
+        marker_dd118297dd55232ddee83b728f08286d.bindPopup(popup_78aaf28d03f4bb0837194ead7009e82d)
+        ;
+
+        
+    
+    
+                marker_dd118297dd55232ddee83b728f08286d.setIcon(icon_83761631d0378f2ad8b029bd355bc947);
+            
+    
+            var poly_line_20034ae179322db35eef46bb044efd7f = L.polyline(
+                [[43.662447, -79.391708], [43.62083, -79.37861], [43.6203083, -79.3736778]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_77cd9f9a05f17dca42c9401b1e560214);
+        
+    
+            poly_line_20034ae179322db35eef46bb044efd7f.bindTooltip(
+                `<div>
+                     Route 2
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_7f655da92c8fd03f4e200133404af2de = L.marker(
+                [43.662447, -79.391708],
+                {
+}
+            ).addTo(map_77cd9f9a05f17dca42c9401b1e560214);
+        
+    
+            var icon_b8d12625010c10c9dfdaa9d34b4de5a3 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_6092ceeae15adcc63085516f4c7a7d44 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6d790ce752e0ed4b42f0490d12db03fc = $(`<div id="html_6d790ce752e0ed4b42f0490d12db03fc" style="width: 100.0%; height: 100.0%;">Route 2: Ontario_Legislative_Building</div>`)[0];
+                popup_6092ceeae15adcc63085516f4c7a7d44.setContent(html_6d790ce752e0ed4b42f0490d12db03fc);
+            
+        
+
+        marker_7f655da92c8fd03f4e200133404af2de.bindPopup(popup_6092ceeae15adcc63085516f4c7a7d44)
+        ;
+
+        
+    
+    
+                marker_7f655da92c8fd03f4e200133404af2de.setIcon(icon_b8d12625010c10c9dfdaa9d34b4de5a3);
+            
+    
+            var marker_f3bce025cf2b1e1f2b8e1fee23601b19 = L.marker(
+                [43.62083, -79.37861],
+                {
+}
+            ).addTo(map_77cd9f9a05f17dca42c9401b1e560214);
+        
+    
+            var icon_e943465e25e82984391f37e81e5edd3a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0f6e128fedb6b11002e63f138ccd391a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3b154378104c0e88bd481ad0489bac7c = $(`<div id="html_3b154378104c0e88bd481ad0489bac7c" style="width: 100.0%; height: 100.0%;">Route 2: Toronto_Islands</div>`)[0];
+                popup_0f6e128fedb6b11002e63f138ccd391a.setContent(html_3b154378104c0e88bd481ad0489bac7c);
+            
+        
+
+        marker_f3bce025cf2b1e1f2b8e1fee23601b19.bindPopup(popup_0f6e128fedb6b11002e63f138ccd391a)
+        ;
+
+        
+    
+    
+                marker_f3bce025cf2b1e1f2b8e1fee23601b19.setIcon(icon_e943465e25e82984391f37e81e5edd3a);
+            
+    
+            var marker_505b6450ae6158e8e277793d35967580 = L.marker(
+                [43.6203083, -79.3736778],
+                {
+}
+            ).addTo(map_77cd9f9a05f17dca42c9401b1e560214);
+        
+    
+            var icon_b7401161e28cb41de0e17faf5876f0fe = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_724f0438fc4c8b9143469fd5b7d8e8a6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2a7387a2d6849b6a44281570cbee0751 = $(`<div id="html_2a7387a2d6849b6a44281570cbee0751" style="width: 100.0%; height: 100.0%;">Route 2: Centreville_Amusement_Park</div>`)[0];
+                popup_724f0438fc4c8b9143469fd5b7d8e8a6.setContent(html_2a7387a2d6849b6a44281570cbee0751);
+            
+        
+
+        marker_505b6450ae6158e8e277793d35967580.bindPopup(popup_724f0438fc4c8b9143469fd5b7d8e8a6)
+        ;
+
+        
+    
+    
+                marker_505b6450ae6158e8e277793d35967580.setIcon(icon_b7401161e28cb41de0e17faf5876f0fe);
+            
+    
+            var poly_line_e59ab16682777c36922644a241c82da5 = L.polyline(
+                [[43.646821, -79.462996], [43.725599, -79.452696], [43.71667, -79.33833]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_77cd9f9a05f17dca42c9401b1e560214);
+        
+    
+            poly_line_e59ab16682777c36922644a241c82da5.bindTooltip(
+                `<div>
+                     Route 3
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_c7b8a70870eeb076cc8992995c815db6 = L.marker(
+                [43.646821, -79.462996],
+                {
+}
+            ).addTo(map_77cd9f9a05f17dca42c9401b1e560214);
+        
+    
+            var icon_8e288d75d062bab1e35179831fe8f35a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_cfd410f56836a485a1efba11ba0f73eb = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_56ba20492dcf9f43168f322f8028cba3 = $(`<div id="html_56ba20492dcf9f43168f322f8028cba3" style="width: 100.0%; height: 100.0%;">Route 3: High_Park</div>`)[0];
+                popup_cfd410f56836a485a1efba11ba0f73eb.setContent(html_56ba20492dcf9f43168f322f8028cba3);
+            
+        
+
+        marker_c7b8a70870eeb076cc8992995c815db6.bindPopup(popup_cfd410f56836a485a1efba11ba0f73eb)
+        ;
+
+        
+    
+    
+                marker_c7b8a70870eeb076cc8992995c815db6.setIcon(icon_8e288d75d062bab1e35179831fe8f35a);
+            
+    
+            var marker_85f5f47ce116cf407ec0431209ace9af = L.marker(
+                [43.725599, -79.452696],
+                {
+}
+            ).addTo(map_77cd9f9a05f17dca42c9401b1e560214);
+        
+    
+            var icon_7e4bfee1d7324f5cbf500a5ee46ffe0d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_5d0bf3b1b50817fe6ae38a3e1584c803 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1bf26376e81493f2c282548f6683c3c1 = $(`<div id="html_1bf26376e81493f2c282548f6683c3c1" style="width: 100.0%; height: 100.0%;">Route 3: Yorkdale_Shopping_Centre</div>`)[0];
+                popup_5d0bf3b1b50817fe6ae38a3e1584c803.setContent(html_1bf26376e81493f2c282548f6683c3c1);
+            
+        
+
+        marker_85f5f47ce116cf407ec0431209ace9af.bindPopup(popup_5d0bf3b1b50817fe6ae38a3e1584c803)
+        ;
+
+        
+    
+    
+                marker_85f5f47ce116cf407ec0431209ace9af.setIcon(icon_7e4bfee1d7324f5cbf500a5ee46ffe0d);
+            
+    
+            var marker_1a93bf0005bc41c283bec7e8a0045083 = L.marker(
+                [43.71667, -79.33833],
+                {
+}
+            ).addTo(map_77cd9f9a05f17dca42c9401b1e560214);
+        
+    
+            var icon_812d9abfc5b7b100d462448cda278550 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b8f0025017a5423ea2e20eab2cfba7c6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_dfa4aa0d9e5d38de0cdb799dbb7c4b51 = $(`<div id="html_dfa4aa0d9e5d38de0cdb799dbb7c4b51" style="width: 100.0%; height: 100.0%;">Route 3: Ontario_Science_Centre</div>`)[0];
+                popup_b8f0025017a5423ea2e20eab2cfba7c6.setContent(html_dfa4aa0d9e5d38de0cdb799dbb7c4b51);
+            
+        
+
+        marker_1a93bf0005bc41c283bec7e8a0045083.bindPopup(popup_b8f0025017a5423ea2e20eab2cfba7c6)
+        ;
+
+        
+    
+    
+                marker_1a93bf0005bc41c283bec7e8a0045083.setIcon(icon_812d9abfc5b7b100d462448cda278550);
+            
+</script>
+</html>

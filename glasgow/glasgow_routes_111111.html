@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_cb6a500b0b329c5f0ed24ffdeda5d45f {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_cb6a500b0b329c5f0ed24ffdeda5d45f" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_cb6a500b0b329c5f0ed24ffdeda5d45f = L.map(
+                "map_cb6a500b0b329c5f0ed24ffdeda5d45f",
+                {
+                    center: [55.86531299999999, -4.2761276666666665],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 13,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_51fef03b8d2b6700b15ddcded3ceea91 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_51fef03b8d2b6700b15ddcded3ceea91.addTo(map_cb6a500b0b329c5f0ed24ffdeda5d45f);
+        
+    
+            var poly_line_afead21b0dfa61171b4968ca854a970a = L.polyline(
+                [[55.859496, -4.287962], [55.86254, -4.2567], [55.8525, -4.25083]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cb6a500b0b329c5f0ed24ffdeda5d45f);
+        
+    
+            poly_line_afead21b0dfa61171b4968ca854a970a.bindTooltip(
+                `<div>
+                     Route 1
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_249ad3208b900aa1a355dd46b27ef335 = L.marker(
+                [55.859496, -4.287962],
+                {
+}
+            ).addTo(map_cb6a500b0b329c5f0ed24ffdeda5d45f);
+        
+    
+            var icon_150abd3defa4d55d73f77e62b76e11c0 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_eee05ed09481700ad8ba3cb3c19430ce = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f5daa88426625bdf360786c5feed9c46 = $(`<div id="html_f5daa88426625bdf360786c5feed9c46" style="width: 100.0%; height: 100.0%;">Route 1: Clyde_Auditorium</div>`)[0];
+                popup_eee05ed09481700ad8ba3cb3c19430ce.setContent(html_f5daa88426625bdf360786c5feed9c46);
+            
+        
+
+        marker_249ad3208b900aa1a355dd46b27ef335.bindPopup(popup_eee05ed09481700ad8ba3cb3c19430ce)
+        ;
+
+        
+    
+    
+                marker_249ad3208b900aa1a355dd46b27ef335.setIcon(icon_150abd3defa4d55d73f77e62b76e11c0);
+            
+    
+            var marker_74ede0cac8b666a95fedf0a0f01a9df6 = L.marker(
+                [55.86254, -4.2567],
+                {
+}
+            ).addTo(map_cb6a500b0b329c5f0ed24ffdeda5d45f);
+        
+    
+            var icon_e6d7a225f717206df0e75513d99f1c35 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a9dc42894e29ac4c403bb5c5ae59306d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6941dab8a775ff978ddfc4725427439c = $(`<div id="html_6941dab8a775ff978ddfc4725427439c" style="width: 100.0%; height: 100.0%;">Route 1: Royal_Scottish_Academy_of_Music_and_Drama</div>`)[0];
+                popup_a9dc42894e29ac4c403bb5c5ae59306d.setContent(html_6941dab8a775ff978ddfc4725427439c);
+            
+        
+
+        marker_74ede0cac8b666a95fedf0a0f01a9df6.bindPopup(popup_a9dc42894e29ac4c403bb5c5ae59306d)
+        ;
+
+        
+    
+    
+                marker_74ede0cac8b666a95fedf0a0f01a9df6.setIcon(icon_e6d7a225f717206df0e75513d99f1c35);
+            
+    
+            var marker_2b11b6462287f08846e982ff5c9a4463 = L.marker(
+                [55.8525, -4.25083],
+                {
+}
+            ).addTo(map_cb6a500b0b329c5f0ed24ffdeda5d45f);
+        
+    
+            var icon_867c21b93d3a0b2dbcd6c5ceac30e861 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ef2ab71c9cd125d4973aa9e86b9b0ad4 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_bd2e2e82134abaf03405ffea3278e333 = $(`<div id="html_bd2e2e82134abaf03405ffea3278e333" style="width: 100.0%; height: 100.0%;">Route 1: Glasgow_Central_Mosque</div>`)[0];
+                popup_ef2ab71c9cd125d4973aa9e86b9b0ad4.setContent(html_bd2e2e82134abaf03405ffea3278e333);
+            
+        
+
+        marker_2b11b6462287f08846e982ff5c9a4463.bindPopup(popup_ef2ab71c9cd125d4973aa9e86b9b0ad4)
+        ;
+
+        
+    
+    
+                marker_2b11b6462287f08846e982ff5c9a4463.setIcon(icon_867c21b93d3a0b2dbcd6c5ceac30e861);
+            
+    
+            var poly_line_2183e9e38780007759bdd22c266ff074 = L.polyline(
+                [[55.864503, -4.252921], [55.8606833, -4.254111], [55.8532056, -4.3092583]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cb6a500b0b329c5f0ed24ffdeda5d45f);
+        
+    
+            poly_line_2183e9e38780007759bdd22c266ff074.bindTooltip(
+                `<div>
+                     Route 2
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_e2186cf3af8193633ce79e580e372dc9 = L.marker(
+                [55.864503, -4.252921],
+                {
+}
+            ).addTo(map_cb6a500b0b329c5f0ed24ffdeda5d45f);
+        
+    
+            var icon_ecc92d9593073acc8839bf5123f69ec1 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_8edd0aad75f5c2eea962c0e879558bb5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_10e544fdd1137588c3f51ce8c97f3735 = $(`<div id="html_10e544fdd1137588c3f51ce8c97f3735" style="width: 100.0%; height: 100.0%;">Route 2: Glasgow_Royal_Concert_Hall</div>`)[0];
+                popup_8edd0aad75f5c2eea962c0e879558bb5.setContent(html_10e544fdd1137588c3f51ce8c97f3735);
+            
+        
+
+        marker_e2186cf3af8193633ce79e580e372dc9.bindPopup(popup_8edd0aad75f5c2eea962c0e879558bb5)
+        ;
+
+        
+    
+    
+                marker_e2186cf3af8193633ce79e580e372dc9.setIcon(icon_ecc92d9593073acc8839bf5123f69ec1);
+            
+    
+            var marker_9864144af2bdfb42d94eef810be6d4ae = L.marker(
+                [55.8606833, -4.254111],
+                {
+}
+            ).addTo(map_cb6a500b0b329c5f0ed24ffdeda5d45f);
+        
+    
+            var icon_bec8f5178c03d09ba6a5f6a09cdc455c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_02b07853636a9094fc99701d4f84f641 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_dc42b70c76aea2eb83edc6b312295186 = $(`<div id="html_dc42b70c76aea2eb83edc6b312295186" style="width: 100.0%; height: 100.0%;">Route 2: Buchanan_Street</div>`)[0];
+                popup_02b07853636a9094fc99701d4f84f641.setContent(html_dc42b70c76aea2eb83edc6b312295186);
+            
+        
+
+        marker_9864144af2bdfb42d94eef810be6d4ae.bindPopup(popup_02b07853636a9094fc99701d4f84f641)
+        ;
+
+        
+    
+    
+                marker_9864144af2bdfb42d94eef810be6d4ae.setIcon(icon_bec8f5178c03d09ba6a5f6a09cdc455c);
+            
+    
+            var marker_656fac860c4aea1741af4f4cdd0eb32c = L.marker(
+                [55.8532056, -4.3092583],
+                {
+}
+            ).addTo(map_cb6a500b0b329c5f0ed24ffdeda5d45f);
+        
+    
+            var icon_24f8f03835c1b14dcb87f9da03f761d3 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_42fa7563064b8eec2d7f709541f3c077 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_eceaf0ac80da6b465a323958afda07dc = $(`<div id="html_eceaf0ac80da6b465a323958afda07dc" style="width: 100.0%; height: 100.0%;">Route 2: Ibrox_Stadium</div>`)[0];
+                popup_42fa7563064b8eec2d7f709541f3c077.setContent(html_eceaf0ac80da6b465a323958afda07dc);
+            
+        
+
+        marker_656fac860c4aea1741af4f4cdd0eb32c.bindPopup(popup_42fa7563064b8eec2d7f709541f3c077)
+        ;
+
+        
+    
+    
+                marker_656fac860c4aea1741af4f4cdd0eb32c.setIcon(icon_24f8f03835c1b14dcb87f9da03f761d3);
+            
+    
+            var poly_line_8a4ef6d737636d3292a722f3e0061243 = L.polyline(
+                [[55.87194, -4.2875], [55.8613694, -4.26861], [55.86502917, -4.26116083]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cb6a500b0b329c5f0ed24ffdeda5d45f);
+        
+    
+            poly_line_8a4ef6d737636d3292a722f3e0061243.bindTooltip(
+                `<div>
+                     Route 3
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_65acc596e814b9d8310f7ab11b747c00 = L.marker(
+                [55.87194, -4.2875],
+                {
+}
+            ).addTo(map_cb6a500b0b329c5f0ed24ffdeda5d45f);
+        
+    
+            var icon_5ac9dce603f49c2c212009ee634bf68f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_1f9ec4c524dabfe05eaa2f5d3042266a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a1d179c63ca477ea8639db3fc7c69d88 = $(`<div id="html_a1d179c63ca477ea8639db3fc7c69d88" style="width: 100.0%; height: 100.0%;">Route 3: University_of_Glasgow</div>`)[0];
+                popup_1f9ec4c524dabfe05eaa2f5d3042266a.setContent(html_a1d179c63ca477ea8639db3fc7c69d88);
+            
+        
+
+        marker_65acc596e814b9d8310f7ab11b747c00.bindPopup(popup_1f9ec4c524dabfe05eaa2f5d3042266a)
+        ;
+
+        
+    
+    
+                marker_65acc596e814b9d8310f7ab11b747c00.setIcon(icon_5ac9dce603f49c2c212009ee634bf68f);
+            
+    
+            var marker_29b2fd2114dbfb5eb7e9e20e6150270d = L.marker(
+                [55.8613694, -4.26861],
+                {
+}
+            ).addTo(map_cb6a500b0b329c5f0ed24ffdeda5d45f);
+        
+    
+            var icon_d2bf5c50acd32f37ff1d419d0717b34f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_971f6034d78e11c9f10407f08ffc9a74 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e2af4f677912f7fe8e23a64ed57d9369 = $(`<div id="html_e2af4f677912f7fe8e23a64ed57d9369" style="width: 100.0%; height: 100.0%;">Route 3: Glasgow_International_Hilton_Hotel</div>`)[0];
+                popup_971f6034d78e11c9f10407f08ffc9a74.setContent(html_e2af4f677912f7fe8e23a64ed57d9369);
+            
+        
+
+        marker_29b2fd2114dbfb5eb7e9e20e6150270d.bindPopup(popup_971f6034d78e11c9f10407f08ffc9a74)
+        ;
+
+        
+    
+    
+                marker_29b2fd2114dbfb5eb7e9e20e6150270d.setIcon(icon_d2bf5c50acd32f37ff1d419d0717b34f);
+            
+    
+            var marker_7640cac3a5a948b6df10a078e79af41a = L.marker(
+                [55.86502917, -4.26116083],
+                {
+}
+            ).addTo(map_cb6a500b0b329c5f0ed24ffdeda5d45f);
+        
+    
+            var icon_4edc26ba26715527606dae453ecb696e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_3312c492e066cd8b1fda44a5d0240f08 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fa4edc9a441dddaaeeb14839b6ed97e6 = $(`<div id="html_fa4edc9a441dddaaeeb14839b6ed97e6" style="width: 100.0%; height: 100.0%;">Route 3: Willow_Tearooms</div>`)[0];
+                popup_3312c492e066cd8b1fda44a5d0240f08.setContent(html_fa4edc9a441dddaaeeb14839b6ed97e6);
+            
+        
+
+        marker_7640cac3a5a948b6df10a078e79af41a.bindPopup(popup_3312c492e066cd8b1fda44a5d0240f08)
+        ;
+
+        
+    
+    
+                marker_7640cac3a5a948b6df10a078e79af41a.setIcon(icon_4edc26ba26715527606dae453ecb696e);
+            
+</script>
+</html>
