@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_e204b02d99ceff14771243a7cd7486d3 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_e204b02d99ceff14771243a7cd7486d3" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_e204b02d99ceff14771243a7cd7486d3 = L.map(
+                "map_e204b02d99ceff14771243a7cd7486d3",
+                {
+                    center: [34.9931666, 136.90309779999998],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 13,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_dc9739a555d4dc7873b564387763ddfd = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_dc9739a555d4dc7873b564387763ddfd.addTo(map_e204b02d99ceff14771243a7cd7486d3);
+        
+    
+            var poly_line_184cce0fba863055687135b4b20a2808 = L.polyline(
+                [[34.64985, 135.51111], [34.65222, 135.50611], [34.6561657, 135.431031]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_e204b02d99ceff14771243a7cd7486d3);
+        
+    
+            poly_line_184cce0fba863055687135b4b20a2808.bindTooltip(
+                `<div>
+                     Route 1
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_2206977caaa79b75ba1c6d4e04542db2 = L.marker(
+                [34.64985, 135.51111],
+                {
+}
+            ).addTo(map_e204b02d99ceff14771243a7cd7486d3);
+        
+    
+            var icon_9e02977a798900d8b908448ec082d935 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_af4e44469c13f975db982435dcf34665 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0f169cd7b8622fd947a549781e9cf2fa = $(`<div id="html_0f169cd7b8622fd947a549781e9cf2fa" style="width: 100.0%; height: 100.0%;">Route 1: Tenn%C5%8Dji_Park</div>`)[0];
+                popup_af4e44469c13f975db982435dcf34665.setContent(html_0f169cd7b8622fd947a549781e9cf2fa);
+            
+        
+
+        marker_2206977caaa79b75ba1c6d4e04542db2.bindPopup(popup_af4e44469c13f975db982435dcf34665)
+        ;
+
+        
+    
+    
+                marker_2206977caaa79b75ba1c6d4e04542db2.setIcon(icon_9e02977a798900d8b908448ec082d935);
+            
+    
+            var marker_59c84fe7149291437fbeba6c3bc2ddf1 = L.marker(
+                [34.65222, 135.50611],
+                {
+}
+            ).addTo(map_e204b02d99ceff14771243a7cd7486d3);
+        
+    
+            var icon_2e6907d83507c3c495c4d610f42ed3cf = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_9d1c35036533f669a5f1c4323dcdcebe = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_76feb3ac2326a4bfb280219ac801f246 = $(`<div id="html_76feb3ac2326a4bfb280219ac801f246" style="width: 100.0%; height: 100.0%;">Route 1: Shinsekai</div>`)[0];
+                popup_9d1c35036533f669a5f1c4323dcdcebe.setContent(html_76feb3ac2326a4bfb280219ac801f246);
+            
+        
+
+        marker_59c84fe7149291437fbeba6c3bc2ddf1.bindPopup(popup_9d1c35036533f669a5f1c4323dcdcebe)
+        ;
+
+        
+    
+    
+                marker_59c84fe7149291437fbeba6c3bc2ddf1.setIcon(icon_2e6907d83507c3c495c4d610f42ed3cf);
+            
+    
+            var marker_613fb1e2925ff16511c26f279aa68233 = L.marker(
+                [34.6561657, 135.431031],
+                {
+}
+            ).addTo(map_e204b02d99ceff14771243a7cd7486d3);
+        
+    
+            var icon_c606e82d130fef6cdc4fff5b13377774 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_e67a3b3f8f6c95d4c701042e499a41df = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_dab91c6a510629e683dcd58b479c8f77 = $(`<div id="html_dab91c6a510629e683dcd58b479c8f77" style="width: 100.0%; height: 100.0%;">Route 1: Tempozan_Ferris_Wheel</div>`)[0];
+                popup_e67a3b3f8f6c95d4c701042e499a41df.setContent(html_dab91c6a510629e683dcd58b479c8f77);
+            
+        
+
+        marker_613fb1e2925ff16511c26f279aa68233.bindPopup(popup_e67a3b3f8f6c95d4c701042e499a41df)
+        ;
+
+        
+    
+    
+                marker_613fb1e2925ff16511c26f279aa68233.setIcon(icon_c606e82d130fef6cdc4fff5b13377774);
+            
+    
+            var poly_line_e976bc56ef38ddc218d2b1daab4c0499 = L.polyline(
+                [[34.654472, 135.428889], [34.644325, 135.5054444], [34.71971, 135.482755]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_e204b02d99ceff14771243a7cd7486d3);
+        
+    
+            poly_line_e976bc56ef38ddc218d2b1daab4c0499.bindTooltip(
+                `<div>
+                     Route 2
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_a72e89410da846fea7287a74a488765d = L.marker(
+                [34.654472, 135.428889],
+                {
+}
+            ).addTo(map_e204b02d99ceff14771243a7cd7486d3);
+        
+    
+            var icon_b54a7b685e2a291f94876efd1dcb002a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_44d788cb02ad4516e36807b7ee6c749a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c2f46408483cccd17fd20f66e3f1c7fd = $(`<div id="html_c2f46408483cccd17fd20f66e3f1c7fd" style="width: 100.0%; height: 100.0%;">Route 2: Osaka_Aquarium_Kaiyukan</div>`)[0];
+                popup_44d788cb02ad4516e36807b7ee6c749a.setContent(html_c2f46408483cccd17fd20f66e3f1c7fd);
+            
+        
+
+        marker_a72e89410da846fea7287a74a488765d.bindPopup(popup_44d788cb02ad4516e36807b7ee6c749a)
+        ;
+
+        
+    
+    
+                marker_a72e89410da846fea7287a74a488765d.setIcon(icon_b54a7b685e2a291f94876efd1dcb002a);
+            
+    
+            var marker_442b2e4d23f50b0e66f58ad0b6ef9664 = L.marker(
+                [34.644325, 135.5054444],
+                {
+}
+            ).addTo(map_e204b02d99ceff14771243a7cd7486d3);
+        
+    
+            var icon_2d0d3eefc22ed1b5b07ad9ca0240b09e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ce2c6fbb7ceb761c36b4b1a8d9edfcf3 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a8134e3a0c74dad7f6a1ac7a9ac81aee = $(`<div id="html_a8134e3a0c74dad7f6a1ac7a9ac81aee" style="width: 100.0%; height: 100.0%;">Route 2: Tobita_Shinchi</div>`)[0];
+                popup_ce2c6fbb7ceb761c36b4b1a8d9edfcf3.setContent(html_a8134e3a0c74dad7f6a1ac7a9ac81aee);
+            
+        
+
+        marker_442b2e4d23f50b0e66f58ad0b6ef9664.bindPopup(popup_ce2c6fbb7ceb761c36b4b1a8d9edfcf3)
+        ;
+
+        
+    
+    
+                marker_442b2e4d23f50b0e66f58ad0b6ef9664.setIcon(icon_2d0d3eefc22ed1b5b07ad9ca0240b09e);
+            
+    
+            var marker_6c424ef58a26ecd64fbf1853112fa98e = L.marker(
+                [34.71971, 135.482755],
+                {
+}
+            ).addTo(map_e204b02d99ceff14771243a7cd7486d3);
+        
+    
+            var icon_9c8314c36f4691d5bc9d363711b0130e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0a0cc9e1e27a3b600eeccca765b356eb = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8a1ca3fdfcfc086496c79c489fc5cf73 = $(`<div id="html_8a1ca3fdfcfc086496c79c489fc5cf73" style="width: 100.0%; height: 100.0%;">Route 2: J%C5%ABs%C5%8D</div>`)[0];
+                popup_0a0cc9e1e27a3b600eeccca765b356eb.setContent(html_8a1ca3fdfcfc086496c79c489fc5cf73);
+            
+        
+
+        marker_6c424ef58a26ecd64fbf1853112fa98e.bindPopup(popup_0a0cc9e1e27a3b600eeccca765b356eb)
+        ;
+
+        
+    
+    
+                marker_6c424ef58a26ecd64fbf1853112fa98e.setIcon(icon_9c8314c36f4691d5bc9d363711b0130e);
+            
+    
+            var poly_line_244cd8b5ea82934342ff3f37c83dca23 = L.polyline(
+                [[35.6751778, 139.7692944], [34.703165, 135.502882], [34.6725, 135.5]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_e204b02d99ceff14771243a7cd7486d3);
+        
+    
+            poly_line_244cd8b5ea82934342ff3f37c83dca23.bindTooltip(
+                `<div>
+                     Route 3
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_f37ab0838d4b0484a40296c1cfe563c9 = L.marker(
+                [35.6751778, 139.7692944],
+                {
+}
+            ).addTo(map_e204b02d99ceff14771243a7cd7486d3);
+        
+    
+            var icon_cf1edf84616a7f4e0dde0eb0c4bf986e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ceebba27a22f46eb4f3cb335677a0746 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b10c9c34eda3b0d843eaa555557a8710 = $(`<div id="html_b10c9c34eda3b0d843eaa555557a8710" style="width: 100.0%; height: 100.0%;">Route 3: Ky%C5%8Dbashi#Osaka</div>`)[0];
+                popup_ceebba27a22f46eb4f3cb335677a0746.setContent(html_b10c9c34eda3b0d843eaa555557a8710);
+            
+        
+
+        marker_f37ab0838d4b0484a40296c1cfe563c9.bindPopup(popup_ceebba27a22f46eb4f3cb335677a0746)
+        ;
+
+        
+    
+    
+                marker_f37ab0838d4b0484a40296c1cfe563c9.setIcon(icon_cf1edf84616a7f4e0dde0eb0c4bf986e);
+            
+    
+            var marker_8cbcf99eded4eaefe917409b2c966afe = L.marker(
+                [34.703165, 135.502882],
+                {
+}
+            ).addTo(map_e204b02d99ceff14771243a7cd7486d3);
+        
+    
+            var icon_c789e6840c4e00a915baeff07db46635 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_bff2ef9943ec0f22009fc31d623fcbe2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0f34f199994e6ffab5983bd54c942866 = $(`<div id="html_0f34f199994e6ffab5983bd54c942866" style="width: 100.0%; height: 100.0%;">Route 3: Doyama,_Osaka,_Japan</div>`)[0];
+                popup_bff2ef9943ec0f22009fc31d623fcbe2.setContent(html_0f34f199994e6ffab5983bd54c942866);
+            
+        
+
+        marker_8cbcf99eded4eaefe917409b2c966afe.bindPopup(popup_bff2ef9943ec0f22009fc31d623fcbe2)
+        ;
+
+        
+    
+    
+                marker_8cbcf99eded4eaefe917409b2c966afe.setIcon(icon_c789e6840c4e00a915baeff07db46635);
+            
+    
+            var marker_c6eeb568f667cf50884433dbf6ea06b2 = L.marker(
+                [34.6725, 135.5],
+                {
+}
+            ).addTo(map_e204b02d99ceff14771243a7cd7486d3);
+        
+    
+            var icon_83a3c099553e913eaafacb9a21593c2e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_1cc612f6485872f7f5c9dde34ef7cf01 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_88e97c893817046602d687074afe9c7e = $(`<div id="html_88e97c893817046602d687074afe9c7e" style="width: 100.0%; height: 100.0%;">Route 3: Shinsaibashi</div>`)[0];
+                popup_1cc612f6485872f7f5c9dde34ef7cf01.setContent(html_88e97c893817046602d687074afe9c7e);
+            
+        
+
+        marker_c6eeb568f667cf50884433dbf6ea06b2.bindPopup(popup_1cc612f6485872f7f5c9dde34ef7cf01)
+        ;
+
+        
+    
+    
+                marker_c6eeb568f667cf50884433dbf6ea06b2.setIcon(icon_83a3c099553e913eaafacb9a21593c2e);
+            
+</script>
+</html>
