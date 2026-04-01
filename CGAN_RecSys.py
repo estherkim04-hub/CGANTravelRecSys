@@ -33,7 +33,314 @@ from sklearn.manifold import TSNE
 import matplotlib.pyplot as plt
 from scipy.stats import wasserstein_distance
 
+# ===============================================================
+# NEW: Intent Schema 
+# ===============================================================
+PURPOSE_LABELS = [
+    "sightseeing", "food", "shopping",
+    "relaxation", "culture", "nightlife"
+]
 
+NOVELTY_LABELS = ["safe", "balanced", "exploratory"]
+ATMOSPHERE_LABELS = ["trendy", "local", "quiet", "iconic"]
+
+TIME_LABELS = ["short", "half-day", "full-day"]
+MOBILITY_LABELS = ["low", "medium", "high"]
+COMPANION_LABELS = ["solo", "friend", "family", "couple"]
+
+INTENT_SCHEMA = {
+    "purpose": PURPOSE_LABELS,
+    "novelty": NOVELTY_LABELS,
+    "atmosphere": ATMOSPHERE_LABELS,
+    "time_budget": TIME_LABELS,
+    "mobility": MOBILITY_LABELS,
+    "companion": COMPANION_LABELS,
+}
+
+
+def one_hot_from_label(label, label_space):
+    vec = np.zeros(len(label_space), dtype=np.float32)
+    if label in label_space:
+        vec[label_space.index(label)] = 1.0
+    return vec
+
+
+def multi_hot_from_labels(labels, label_space):
+    vec = np.zeros(len(label_space), dtype=np.float32)
+    if labels is None:
+        return vec
+    if isinstance(labels, str):
+        labels = [labels]
+    for lb in labels:
+        if lb in label_space:
+            vec[label_space.index(lb)] = 1.0
+    return vec
+
+
+def build_intent_vector(intent_dict):
+    """
+    intent_dict example:
+    {
+        "purpose": ["food", "relaxation"],
+        "novelty": "balanced",
+        "atmosphere": ["local", "quiet"],
+        "time_budget": "half-day",
+        "mobility": "low",
+        "companion": "solo"
+    }
+    """
+    purpose_vec = multi_hot_from_labels(intent_dict.get("purpose", []), PURPOSE_LABELS)
+    novelty_vec = one_hot_from_label(intent_dict.get("novelty", "balanced"), NOVELTY_LABELS)
+    atmosphere_vec = multi_hot_from_labels(intent_dict.get("atmosphere", []), ATMOSPHERE_LABELS)
+    time_vec = one_hot_from_label(intent_dict.get("time_budget", "half-day"), TIME_LABELS)
+    mobility_vec = one_hot_from_label(intent_dict.get("mobility", "medium"), MOBILITY_LABELS)
+    companion_vec = one_hot_from_label(intent_dict.get("companion", "solo"), COMPANION_LABELS)
+
+    return np.concatenate([
+        purpose_vec,
+        novelty_vec,
+        atmosphere_vec,
+        time_vec,
+        mobility_vec,
+        companion_vec
+    ]).astype(np.float32)
+
+
+INTENT_DIM = (
+    len(PURPOSE_LABELS)
+    + len(NOVELTY_LABELS)
+    + len(ATMOSPHERE_LABELS)
+    + len(TIME_LABELS)
+    + len(MOBILITY_LABELS)
+    + len(COMPANION_LABELS)
+)
+
+# ===============================================================
+# NEW: Intent Extraction 자연어 입력시 intent 추출 함
+# ===============================================================
+def default_intent():
+    return {
+        "purpose": ["sightseeing"],
+        "novelty": "balanced",
+        "atmosphere": ["iconic"],
+        "time_budget": "half-day",
+        "mobility": "medium",
+        "companion": "solo"
+    }
+
+
+def extract_intent_rule_based(text: str):
+    """
+    Fallback parser for quick experiments.
+    Later you can replace this with an LLM call.
+    """
+    t = text.lower().strip()
+    intent = default_intent()
+
+    # purpose
+    purpose_hits = []
+    if any(k in t for k in ["food", "restaurant", "eat", "cafe", "meal", "dessert"]):
+        purpose_hits.append("food")
+    if any(k in t for k in ["shopping", "shop", "mall", "store", "market"]):
+        purpose_hits.append("shopping")
+    if any(k in t for k in ["relax", "chill", "healing", "rest", "slow"]):
+        purpose_hits.append("relaxation")
+    if any(k in t for k in ["museum", "palace", "history", "culture", "art", "exhibition"]):
+        purpose_hits.append("culture")
+    if any(k in t for k in ["night", "bar", "club", "drinks", "late"]):
+        purpose_hits.append("nightlife")
+    if any(k in t for k in ["landmark", "attraction", "must-see", "tour", "viewpoint"]):
+        purpose_hits.append("sightseeing")
+
+    if purpose_hits:
+        intent["purpose"] = purpose_hits[:2]
+
+    # novelty
+    if any(k in t for k in ["safe", "famous", "first time", "beginner", "classic"]):
+        intent["novelty"] = "safe"
+    elif any(k in t for k in ["hidden", "explore", "adventurous", "offbeat", "local gem"]):
+        intent["novelty"] = "exploratory"
+    else:
+        intent["novelty"] = "balanced"
+
+    # atmosphere
+    atmos = []
+    if any(k in t for k in ["trendy", "hot place", "hip", "popular"]):
+        atmos.append("trendy")
+    if any(k in t for k in ["local", "authentic", "neighborhood"]):
+        atmos.append("local")
+    if any(k in t for k in ["quiet", "calm", "peaceful", "not crowded"]):
+        atmos.append("quiet")
+    if any(k in t for k in ["iconic", "famous", "landmark", "must-see"]):
+        atmos.append("iconic")
+    if atmos:
+        intent["atmosphere"] = atmos[:2]
+
+    # time_budget
+    if any(k in t for k in ["1 hour", "2 hour", "short", "brief", "quick"]):
+        intent["time_budget"] = "short"
+    elif any(k in t for k in ["half-day", "afternoon", "morning"]):
+        intent["time_budget"] = "half-day"
+    elif any(k in t for k in ["full-day", "whole day", "all day"]):
+        intent["time_budget"] = "full-day"
+
+    # mobility
+    if any(k in t for k in ["not much walking", "low mobility", "easy walk", "minimal walking"]):
+        intent["mobility"] = "low"
+    elif any(k in t for k in ["can walk a lot", "long walk", "high mobility"]):
+        intent["mobility"] = "high"
+    else:
+        intent["mobility"] = "medium"
+
+    # companion
+    if any(k in t for k in ["alone", "solo", "by myself"]):
+        intent["companion"] = "solo"
+    elif any(k in t for k in ["friend", "friends"]):
+        intent["companion"] = "friend"
+    elif any(k in t for k in ["family", "parents", "kids", "child"]):
+        intent["companion"] = "family"
+    elif any(k in t for k in ["couple", "boyfriend", "girlfriend", "date"]):
+        intent["companion"] = "couple"
+
+    return intent
+
+
+def extract_intent_with_llm(text: str, llm_fn=None):
+    """
+    llm_fn should return a dict in the same schema.
+    If llm_fn is None, fallback to rule-based extraction.
+    """
+    if llm_fn is None:
+        return extract_intent_rule_based(text)
+
+    result = llm_fn(text)
+    if not isinstance(result, dict):
+        return extract_intent_rule_based(text)
+    return result
+
+# ===============================================================
+# NEW: Pseudo Intent for Training 학습용 pseudo-intent 생성 함수 추
+# ===============================================================
+def infer_purpose_from_route(route_pois):
+    theme_counter = Counter()
+    for poi in route_pois:
+        for th in place_themes.get(poi, []):
+            theme_counter[th] += 1
+
+    theme_text = " ".join(theme_counter.keys()).lower()
+
+    purpose = ["sightseeing"]
+
+    if any(k in theme_text for k in ["restaurant", "food", "cafe", "dining"]):
+        purpose = ["food"]
+    elif any(k in theme_text for k in ["retail", "shopping", "market"]):
+        purpose = ["shopping"]
+    elif any(k in theme_text for k in ["museum", "gallery", "heritage", "art", "historic"]):
+        purpose = ["culture"]
+    elif any(k in theme_text for k in ["park", "garden", "waterfront", "nature"]):
+        purpose = ["relaxation"]
+    elif any(k in theme_text for k in ["bar", "night", "entertainment", "club"]):
+        purpose = ["nightlife"]
+
+    return purpose
+
+
+def infer_atmosphere_from_route(route_pois):
+    subtheme_text = " ".join(
+        st.lower()
+        for poi in route_pois
+        for st in place_subthemes.get(poi, [])
+    )
+
+    atmos = []
+    if any(k in subtheme_text for k in ["trendy", "fashion", "popular", "modern"]):
+        atmos.append("trendy")
+    if any(k in subtheme_text for k in ["local", "community", "neighborhood"]):
+        atmos.append("local")
+    if any(k in subtheme_text for k in ["park", "library", "quiet", "garden"]):
+        atmos.append("quiet")
+    if any(k in subtheme_text for k in ["landmark", "monument", "museum", "historic"]):
+        atmos.append("iconic")
+
+    if not atmos:
+        atmos = ["iconic"]
+
+    return atmos[:2]
+
+
+def infer_time_budget_and_mobility(route_pois):
+    n_pois = len(route_pois)
+
+    route_dist = 0.0
+    for i in range(len(route_pois) - 1):
+        p1, p2 = route_pois[i], route_pois[i+1]
+        if p1 in place_to_coord and p2 in place_to_coord:
+            route_dist += haversine(
+                place_to_coord[p1][0], place_to_coord[p1][1],
+                place_to_coord[p2][0], place_to_coord[p2][1]
+            )
+
+    # time_budget heuristic
+    if n_pois <= 2:
+        time_budget = "short"
+    elif n_pois <= 4:
+        time_budget = "half-day"
+    else:
+        time_budget = "full-day"
+
+    # mobility heuristic
+    if route_dist < 3.0:
+        mobility = "low"
+    elif route_dist < 8.0:
+        mobility = "medium"
+    else:
+        mobility = "high"
+
+    return time_budget, mobility
+
+
+def infer_novelty_from_route(user_id, route_pois):
+    visited = user_visited_places.get(user_id, set())
+    if not route_pois:
+        return "balanced"
+
+    revisit_ratio = sum(1 for p in route_pois if p in visited) / max(len(route_pois), 1)
+
+    if revisit_ratio >= 0.7:
+        return "safe"
+    elif revisit_ratio <= 0.3:
+        return "exploratory"
+    return "balanced"
+
+
+def infer_companion_from_route(route_pois):
+    """
+    Current dataset has no explicit companion labels.
+    Use a weak prior for training.
+    """
+    if len(route_pois) >= 5:
+        return "friend"
+    return "solo"
+
+
+def infer_pseudo_intent_from_row(row):
+    route_pois = [row[c] for c in moving_cols if pd.notnull(row[c]) and row[c] in valid_places]
+    user_id = row["userID"]
+
+    purpose = infer_purpose_from_route(route_pois)
+    atmosphere = infer_atmosphere_from_route(route_pois)
+    time_budget, mobility = infer_time_budget_and_mobility(route_pois)
+    novelty = infer_novelty_from_route(user_id, route_pois)
+    companion = infer_companion_from_route(route_pois)
+
+    return {
+        "purpose": purpose,
+        "novelty": novelty,
+        "atmosphere": atmosphere,
+        "time_budget": time_budget,
+        "mobility": mobility,
+        "companion": companion
+    }
 # -----------------------------------------------
 # 1. Environment setup and data loading
 # -----------------------------------------------
@@ -1374,31 +1681,39 @@ def evaluate_performance_by_k_with_fid(k_range, num_gen_routes_per_k=100):
 # 13.5. Enhanced Condition Vector generated function (NEW)
 # -----------------------------------------------
 
-def create_enhanced_condition_vector(user_id, df, moving_cols, confidence_scores):
-    user_combined_v = combined_user_emb.get(user_id, np.zeros(user_final_dim))
-    
+# ===============================================================
+# NEW: Intent-aware Condition Vector 의도 기반으로 벡터 생성함!
+# ===============================================================
+def create_intent_aware_condition_vector(user_id, intent_dict, df, moving_cols, confidence_scores):
+    """
+    final_cond = [intent_vec ; user_combined ; weighted_freq ; multi_signal]
+    """
+    intent_vec = build_intent_vector(intent_dict)
+
+    user_combined_v = combined_user_emb.get(user_id, np.zeros(user_final_dim, dtype=np.float32))
     multi_signal_features = compute_multi_signal_features(user_id, df, moving_cols, confidence_scores)
-    
+
     user_confidence = confidence_scores.get(user_id, {})
     if user_confidence:
         weighted_freq = sum(
-            freq_info.get('frequency_conf', 0.5) * 
+            freq_info.get('frequency_conf', 0.5) *
             df[df['userID'] == user_id]['totalFreq'].mean()
             for freq_info in user_confidence.values()
         ) / len(user_confidence)
     else:
         weighted_freq = df[df['userID'] == user_id]['totalFreq'].mean()
-    
+
     if pd.isna(weighted_freq):
         weighted_freq = df['totalFreq'].mean()
-    
-    enhanced_condition_vector = np.concatenate([
-        user_combined_v,
-        np.array([weighted_freq]),
-        multi_signal_features
+
+    final_cond = np.concatenate([
+        intent_vec,
+        user_combined_v.astype(np.float32),
+        np.array([weighted_freq], dtype=np.float32),
+        multi_signal_features.astype(np.float32)
     ]).astype(np.float32)
-    
-    return enhanced_condition_vector
+
+    return final_cond
 
 def find_similar_users_by_pref(target_user_id, sim_model, user_ids_knn_list, top_k=5):
     if target_user_id not in user_ids_knn_list or sim_model is None:
@@ -1418,29 +1733,42 @@ def find_similar_users_by_pref(target_user_id, sim_model, user_ids_knn_list, top
         
     return similar_users
 
-def create_collaborative_condition_vector(user_id, sim_model, user_ids_list, sparsity_threshold=5):
-    original_cond_vec = create_enhanced_condition_vector(user_id, df, moving_cols, all_confidence_scores)
+def create_collaborative_intent_condition_vector(
+    user_id,
+    intent_dict,
+    sim_model,
+    user_ids_list,
+    sparsity_threshold=5
+):
+    original_cond_vec = create_intent_aware_condition_vector(
+        user_id, intent_dict, df, moving_cols, all_confidence_scores
+    )
+
     user_interaction_count = len(df[df['userID'] == user_id])
     if user_interaction_count >= sparsity_threshold:
         return original_cond_vec
 
-    print(f"    [Info] User {user_id} is sparse. Augmenting condition with similar users.")
     similar_users = find_similar_users_by_pref(user_id, sim_model, user_ids_list, top_k=5)
     if not similar_users:
         return original_cond_vec
 
-    similar_user_vectors, total_similarity = [], 0
+    similar_user_vectors = []
+    total_similarity = 0.0
+
     for sim_user_id, similarity in similar_users:
-        sim_user_vec = create_enhanced_condition_vector(sim_user_id, df, moving_cols, all_confidence_scores)
-        similar_user_vectors.append(sim_user_vec * similarity)
+        sim_vec = create_intent_aware_condition_vector(
+            sim_user_id, intent_dict, df, moving_cols, all_confidence_scores
+        )
+        similar_user_vectors.append(sim_vec * similarity)
         total_similarity += similarity
+
     if not similar_user_vectors or total_similarity == 0:
         return original_cond_vec
-    aggregated_vector = np.sum(similar_user_vectors, axis=0) / total_similarity
-    alpha = user_interaction_count / sparsity_threshold
-    final_collaborative_vec = (alpha * original_cond_vec) + ((1 - alpha) * aggregated_vector)
 
-    return final_collaborative_vec.astype(np.float32) 
+    aggregated = np.sum(similar_user_vectors, axis=0) / total_similarity
+    alpha = user_interaction_count / sparsity_threshold
+    final_vec = alpha * original_cond_vec + (1 - alpha) * aggregated
+    return final_vec.astype(np.float32)
 
 print("  ▶ Building POI-to-POI similarity model (KNN)...")
 poi_list_for_knn = list(place_emb.keys())
@@ -1464,11 +1792,78 @@ for user_id in df['userID'].unique():
         user_id, df, moving_cols, poiFreq_cols
     )
 
-print("Building collaborative condition vectors for CGAN...")
+# -----------------------------------------------
+# 14. X_lat / X_cond Prepare & Standardization (for CGAN)
+# -----------------------------------------------
+print("Computing confidence scores for all users...")
+all_confidence_scores = {}
+for user_id in df['userID'].unique():
+    all_confidence_scores[user_id] = calculate_interaction_confidence(
+        user_id, df, moving_cols, poiFreq_cols
+    )
+
+print("Building intent-aware collaborative condition vectors for CGAN...")
 X_lat_list, X_cond_list = [], []
 
 for _, row in df.iterrows():
-    u_id_orig, item_id_orig_ = row['userID'], row['itemID'] # Original IDs
+    u_id_orig = row['userID']
+    item_id_orig_ = row['itemID']
+
+    if u_id_orig not in combined_user_emb:
+        continue
+    if item_id_orig_ not in route_latents_merged_dict:
+        continue
+
+    lat_vec_item = route_latents_merged_dict[item_id_orig_]
+    X_lat_list.append(lat_vec_item)
+
+    pseudo_intent = infer_pseudo_intent_from_row(row)
+
+    cond_vec_user = create_collaborative_intent_condition_vector(
+        u_id_orig,
+        pseudo_intent,
+        sim_user_model,
+        user_ids_pref_knn,
+        sparsity_threshold=5
+    )
+    X_cond_list.append(cond_vec_user)
+
+if not X_lat_list or not X_cond_list:
+    print("CRITICAL: X_lat_list or X_cond_list is empty. CGAN cannot be trained.")
+    X_lat = np.array([])
+    X_cond = np.array([])
+    X_lat_train = X_lat_test = X_cond_train = X_cond_test = np.array([])
+    X_lat_train_scaled = X_lat_test_scaled = X_cond_train_scaled = X_cond_test_scaled = np.array([])
+    X_lat_train_cgan_input = np.array([])
+    cond_dim = 0
+    noise_dim = 128
+else:
+    X_lat = np.vstack(X_lat_list).astype(np.float32)
+    X_cond = np.vstack(X_cond_list).astype(np.float32)
+
+    print(f"Built latent vectors X_lat with shape: {X_lat.shape}")
+    print(f"Built condition vectors X_cond with shape: {X_cond.shape}")
+
+    X_lat_train, X_lat_test, X_cond_train, X_cond_test = train_test_split(
+        X_lat, X_cond, test_size=0.2, random_state=42
+    )
+
+    scaler_lat = MinMaxScaler(feature_range=(-1, 1)).fit(X_lat_train)
+    scaler_cond = StandardScaler().fit(X_cond_train)
+
+    X_lat_train_scaled = scaler_lat.transform(X_lat_train)
+    X_lat_test_scaled = scaler_lat.transform(X_lat_test)
+    X_cond_train_scaled = scaler_cond.transform(X_cond_train)
+    X_cond_test_scaled = scaler_cond.transform(X_cond_test)
+
+    cond_dim = X_cond_train_scaled.shape[1]
+    noise_dim = 128
+
+    X_lat_train_cgan_input = X_lat_train_scaled
+
+for _, row in df.iterrows():
+    u_id_orig = row['userID']
+    item_id_orig_ = row['itemID']
 
     if u_id_orig not in combined_user_emb or item_id_orig_ not in route_latents_merged_dict:
         continue
@@ -1476,8 +1871,14 @@ for _, row in df.iterrows():
     lat_vec_item = route_latents_merged_dict[item_id_orig_]
     X_lat_list.append(lat_vec_item)
 
-    cond_vec_user = create_collaborative_condition_vector(
-        u_id_orig, sim_user_model, user_ids_pref_knn, sparsity_threshold=5
+    pseudo_intent = infer_pseudo_intent_from_row(row)
+
+    cond_vec_user = create_collaborative_intent_condition_vector(
+        u_id_orig,
+        pseudo_intent,
+        sim_user_model,
+        user_ids_pref_knn,
+        sparsity_threshold=5
     )
     X_cond_list.append(cond_vec_user)
 
@@ -2235,77 +2636,146 @@ def calculate_standard_precision_recall_f1(recommended_routes, ground_truth_pois
 # -----------------------------------------------
 # 18. Recommended function: “CGAN Latent → POI sequence”
 # -----------------------------------------------
-def recommend_routes_enhanced(target_user_id, pois_to_exclude=None, top_k_pois_per_route=3, num_gen_routes=3, lambda_mmr=0.7):
-    if 'G_lat' not in globals() or not G_lat: return {}
-    if target_user_id not in combined_user_emb: return {}
+# -----------------------------------------------
+# 18. Recommended function: “CGAN Latent → POI sequence”
+# -----------------------------------------------
+def recommend_routes_enhanced(
+    target_user_id,
+    user_text=None,
+    intent_dict=None,
+    pois_to_exclude=None,
+    top_k_pois_per_route=None,
+    num_gen_routes=3,
+    lambda_mmr=0.7
+):
+    if 'G_lat' not in globals() or G_lat is None:
+        return {}
+    if target_user_id not in combined_user_emb:
+        return {}
 
-    enhanced_cond_vec = create_collaborative_condition_vector(target_user_id, sim_user_model, user_ids_pref_knn)
+    # 1) 자연어 -> intent 추출
+    if intent_dict is None:
+        if user_text is None:
+            intent_dict = default_intent()
+        else:
+            intent_dict = extract_intent_with_llm(user_text)
+
+    # 2) time_budget 기반 route 길이 설정
+    if top_k_pois_per_route is None:
+        if intent_dict["time_budget"] == "short":
+            top_k_pois_per_route = 2
+        elif intent_dict["time_budget"] == "half-day":
+            top_k_pois_per_route = 4
+        else:
+            top_k_pois_per_route = 6
+
+    # 3) intent-aware condition vector
+    enhanced_cond_vec = create_collaborative_intent_condition_vector(
+        target_user_id,
+        intent_dict,
+        sim_user_model,
+        user_ids_pref_knn
+    )
+
     cond_vec_scaled = scaler_cond.transform(enhanced_cond_vec.reshape(1, -1))
     noise_for_gen = np.random.normal(0, 1, (num_gen_routes, noise_dim))
-    generated_latents_scaled = G_lat.predict([noise_for_gen, cond_vec_scaled.repeat(num_gen_routes, axis=0)], verbose=0)
+    generated_latents_scaled = G_lat.predict(
+        [noise_for_gen, cond_vec_scaled.repeat(num_gen_routes, axis=0)],
+        verbose=0
+    )
     generated_latents = scaler_lat.inverse_transform(generated_latents_scaled)
-    
-    # --- Step 1: Anchor POI Selection (Cold-Start Handling) ---
+
+    # --- Step 1: Anchor POI Selection ---
     visited = user_visited_places.get(target_user_id, set())
+
     if not visited:
-        anchor_pois = random.sample(list(valid_places), num_gen_routes)
+        anchor_candidates = {p for p in valid_places if p in place_emb}
     else:
-        anchor_candidates = visited
-        if pois_to_exclude:
-            anchor_candidates -= pois_to_exclude
-
-        if not anchor_candidates:
+        if intent_dict.get("novelty") == "safe":
+            anchor_candidates = set(visited)
+        elif intent_dict.get("novelty") == "exploratory":
+            anchor_candidates = {p for p in valid_places if p in place_emb} - set(visited)
+            if not anchor_candidates:
+                anchor_candidates = {p for p in valid_places if p in place_emb}
+        else:
             anchor_candidates = {p for p in valid_places if p in place_emb}
-            if pois_to_exclude:
-                anchor_candidates -= pois_to_exclude
 
-        anchor_pois = []
-        for latent_vec in generated_latents:
-            best_anchor, max_relevance = None, -1.0
-            for poi in anchor_candidates:
-                rel = 1 - cosine(place_emb[poi], latent_vec)
-                if rel > max_relevance:
-                    best_anchor, max_relevance = poi, rel
-            if best_anchor:
-                anchor_pois.append(best_anchor)
+    if pois_to_exclude:
+        anchor_candidates -= set(pois_to_exclude)
+
+    if not anchor_candidates:
+        return {}
+
+    anchor_pois = []
+    for latent_vec in generated_latents:
+        best_anchor = None
+        best_score = -1.0
+        for poi in anchor_candidates:
+            rel = 1 - cosine(place_emb[poi], latent_vec)
+            if rel > best_score:
+                best_anchor = poi
+                best_score = rel
+        if best_anchor is not None:
+            anchor_pois.append(best_anchor)
+
+    if not anchor_pois:
+        return {}
 
     # --- Step 2: Route Expansion ---
-    
     final_routes = []
     used_pois_across_all_routes = set(anchor_pois)
 
     for i, anchor_poi in enumerate(anchor_pois):
         gen_latent = generated_latents[i]
         route_sequence = [anchor_poi]
-        
+
         expansion_candidates = {p for p in valid_places if p in place_emb} - used_pois_across_all_routes
-        
-        if anchor_poi in poi_list_for_knn and poi_sim_model:
+        if pois_to_exclude:
+            expansion_candidates -= set(pois_to_exclude)
+
+        if anchor_poi in poi_list_for_knn and poi_sim_model is not None:
             num_neighbors_to_request = min(50, poi_sim_model.n_samples_fit_)
-            
             p_idx = poi_list_for_knn.index(anchor_poi)
             if num_neighbors_to_request > 0:
-                _, indices = poi_sim_model.kneighbors([poi_matrix_for_knn[p_idx]], n_neighbors=num_neighbors_to_request)
+                _, indices = poi_sim_model.kneighbors(
+                    [poi_matrix_for_knn[p_idx]],
+                    n_neighbors=num_neighbors_to_request
+                )
                 similar_pois = {poi_list_for_knn[idx] for idx in indices.flatten()}
                 expansion_candidates.update(similar_pois - used_pois_across_all_routes)
 
         for _ in range(top_k_pois_per_route - 1):
-            if not expansion_candidates: break
-            
+            if not expansion_candidates:
+                break
+
             next_poi = None
-            max_score = -1
-            
+            max_score = -1.0
+
             last_poi_in_route_emb = place_emb[route_sequence[-1]]
-            
+
             for candidate_poi in expansion_candidates:
                 candidate_emb = place_emb[candidate_poi]
-                score = (1 - cosine(candidate_emb, gen_latent)) * 0.6 + \
-                        (1 - cosine(candidate_emb, last_poi_in_route_emb)) * 0.4
+
+                score = (
+                    (1 - cosine(candidate_emb, gen_latent)) * 0.6
+                    + (1 - cosine(candidate_emb, last_poi_in_route_emb)) * 0.4
+                )
+
+                # mobility 약식 반영
+                if intent_dict.get("mobility") == "low":
+                    if route_sequence[-1] in place_to_coord and candidate_poi in place_to_coord:
+                        step_dist = haversine(
+                            place_to_coord[route_sequence[-1]][0],
+                            place_to_coord[route_sequence[-1]][1],
+                            place_to_coord[candidate_poi][0],
+                            place_to_coord[candidate_poi][1]
+                        )
+                        score -= 0.03 * step_dist
 
                 if score > max_score:
                     max_score = score
                     next_poi = candidate_poi
-            
+
             if next_poi:
                 route_sequence.append(next_poi)
                 used_pois_across_all_routes.add(next_poi)
@@ -2314,10 +2784,22 @@ def recommend_routes_enhanced(target_user_id, pois_to_exclude=None, top_k_pois_p
         if route_sequence:
             optimized_sequence = optimize_route_tsp(route_sequence, place_to_coord)
             final_routes.append({
-                'routeID': f"Anchor-Expand_Route_{target_user_id}_{i+1}",
+                'routeID': f"IntentRoute_{target_user_id}_{i+1}",
                 'sequence': optimized_sequence,
-                'themes': list(set(th for p in optimized_sequence if p in place_themes for th in place_themes[p])),
-                'total_distance': compute_route_distance(optimized_sequence, place_to_coord, target_user_id, user_visited_places, df, moving_cols)
+                'intent': intent_dict,
+                'themes': list(set(
+                    th for p in optimized_sequence
+                    if p in place_themes
+                    for th in place_themes[p]
+                )),
+                'total_distance': compute_route_distance(
+                    optimized_sequence,
+                    place_to_coord,
+                    target_user_id,
+                    user_visited_places,
+                    df,
+                    moving_cols
+                )
             })
 
     user_rows = df[df['userID'] == target_user_id]
@@ -2329,10 +2811,15 @@ def recommend_routes_enhanced(target_user_id, pois_to_exclude=None, top_k_pois_p
                 if pd.notnull(val) and val in place_emb:
                     last_poi_for_context = val
                     break
-            if last_poi_for_context: break
+            if last_poi_for_context:
+                break
 
-    return {'user_id': target_user_id, 'recommended_routes': final_routes, 'last_known_poi_for_context': last_poi_for_context}      
-
+    return {
+        'user_id': target_user_id,
+        'intent': intent_dict,
+        'recommended_routes': final_routes,
+        'last_known_poi_for_context': last_poi_for_context
+    }
 def optimize_route_tsp(poi_names, place_to_coord):
     coords = [place_to_coord[p] for p in poi_names if p in place_to_coord]
     n = len(coords)
