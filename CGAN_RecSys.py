@@ -60,7 +60,7 @@ def normalize_poi_name(name):
 #Osaka
 #file_path = '{The path where you put the whole system}/dataset/osak_finale_userRoutes_with_theme_preferences.csv'
 # ===================================================================================================
-file_path = '/content/CGANTravelRecSys/CGANTravelRecSys/dataset/toro_finale_userRoutes_with_theme_preferences.csv'
+file_path = './dataset/toro_finale_userRoutes_with_theme_preferences.csv'
 
 df = pd.read_csv(file_path, encoding='utf-8')
 
